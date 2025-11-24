@@ -1,35 +1,39 @@
-<div id="<%= dom_id cart %>">
-  <h2 class="font-bold text-lg mb-3">Your Cart</h2>
+<div id="<%= dom_id cart %>" class="p-4 bg-white rounded-lg shadow-md">
 
-  <table class="table-auto w-full">
+  <h2 class="font-bold text-xl mb-4 border-b pb-2 text-gray-800">
+    Your Cart
+  </h2>
+
+  <table class="table-auto w-full text-sm border border-separate border-spacing-x-10 border-spacing-y-2">
+
     <thead>
-      <tr>
-        <th class="text-left pb-2">Image</th>
-        <th class="text-left pb-2">Qty</th>
-        <th></th>
-        <th class="text-left pb-2">Product</th>
-        <th class="text-right pb-2">Price</th>
+      <tr class="text-gray-600 px-2 border">
+        <th class="text-left  px-2  py-2">Qty</th>
+        <th class="text-left border px-2 py-2">Product</th>
+        <th class="text-right  px-2 py-2">Price</th>
       </tr>
     </thead>
 
-    <%= render cart.line_items %>
+    <tbody>
+      <%= render cart.line_items %>
+    </tbody>
 
     <tfoot>
       <tr>
-        <th class="text-right pr-2 pt-2" colspan="4">Total:</th>
-        <td class="text-right pt-2 font-bold border-t-2 border-black">
+        <th colspan="3" class="text-right pr-2 pt-3 text-gray-700">Total:</th>
+        <td class="text-right pt-3 font-bold text-lg border-t-2 border-gray-800">
           <%= number_to_currency(cart.total_price) %>
         </td>
       </tr>
     </tfoot>
   </table>
 
-  <div class= "flex mt-1"> 
-  <%= button_to 'Empty Cart', cart, method: :delete,
-        class: 'ml-4 rounded-lg py-1 px-2 text-white bg-green-600' %>
+  <div class="flex justify-end gap-3 mt-4">
 
-  <%= button_to 'Checkout', new_order_path, method: :get,
-   class: 'ml-4 rounded-lg py-1 px-2 text-black bg-green-200' %>
+    <%= button_to 'Empty Cart', cart, method: :delete,
+          class: 'rounded-lg py-2 px-4 text-white bg-red-600 hover:bg-red-700 shadow-sm' %>
+
+    <%= button_to 'Checkout', new_order_path, method: :get,
+          class: 'rounded-lg py-2 px-4 text-white bg-green-600 hover:bg-green-700 shadow-sm' %>
   </div>
 </div>
-

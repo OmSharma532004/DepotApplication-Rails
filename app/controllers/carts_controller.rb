@@ -15,6 +15,10 @@ class CartsController < ApplicationController
     @cart = Cart.new
   end
 
+  def remove_item
+    
+  end
+
   # GET /carts/1/edit
   def edit
   end

@@ -13,6 +13,48 @@ class LineItemsController < ApplicationController
   def show
   end
 
+def add_line_item
+  @line_item = LineItem.find(params[:id])
+  @line_item.quantity += 1
+
+  respond_to do |format|
+    if @line_item.save
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "cart",
+          partial: "layouts/cart",
+          locals: { cart: @line_item.cart }
+        )
+      end
+      format.html { redirect_to store_index_url }
+    end
+  end
+end
+
+
+def remove_line_item
+  @line_item = LineItem.find(params[:id])
+  @line_item.quantity -= 1
+
+  respond_to do |format|
+    if @line_item.quantity == 0
+      @line_item.destroy
+    else
+      @line_item.save
+    end
+
+    format.turbo_stream do
+      render turbo_stream: turbo_stream.replace(
+        "cart",
+        partial: "layouts/cart",
+        locals: { cart: @line_item.cart }
+      )
+    end
+    format.html { redirect_to store_index_url }
+  end
+end
+
+
   # GET /line_items/new
   def new
     @line_item = LineItem.new
@@ -59,7 +101,7 @@ end
     @line_item.destroy!
 
     respond_to do |format|
-      format.html { redirect_to line_items_path, notice: "Line item was successfully destroyed.", status: :see_other }
+      format.html { redirect_to store_index_url, notice: "Line item was successfully destroyed.", status: :see_other }
       format.json { head :no_content }
     end
   end
