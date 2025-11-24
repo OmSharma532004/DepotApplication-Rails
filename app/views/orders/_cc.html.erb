@@ -1,0 +1,18 @@
+<fieldset 
+  data-payment-target="additionalFields" 
+  data-type="Credit card"
+  class="mt-6 bg-gray-50 p-6 rounded-xl shadow-inner "
+>
+  <div class="mb-6">
+    <%= form.label :credit_card_number, class: "block font-medium text-gray-700" %>
+    <%= form.password_field :credit_card_number, class: "border border-gray-200 input-field" %>
+  </div>
+
+  <div class="mb-6">
+    <%= form.label :expiration_date, class: "block font-medium text-gray-700" %>
+    <%= form.text_field :expiration_date,
+          class: "border border-gray-200 input-field",
+          size: 9,
+          placeholder: "e.g. 03/22" %>
+  </div>
+</fieldset>

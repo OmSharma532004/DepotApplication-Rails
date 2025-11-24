@@ -15,6 +15,19 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "requires item in cart" do
+    get new_order_url
+    assert_redirected_to store_index_path
+    assert_equal 'Your cart is empty',flash[:notice]
+  end
+
+  test "should get new" do
+    post line_items_url, params: {product_id: products(:ruby).id}
+
+    get new_order_url
+    assert_response :success
+  end
+
   test "should create product" do
     assert_difference("Product.count") do
       post products_url, params: { product: { description: @product.description, image_url: @product.image_url, price: @product.price, title: @product.title } }

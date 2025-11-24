@@ -3,36 +3,40 @@
 <head>
   <title>Pragprog Books Online Store</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+
   <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
   <%= javascript_importmap_tags %>
 </head>
-<body>
-<header class="bg-green-700 flex items-center gap-4 px-6 py-3 shadow-lg">
-  <%= image_tag 'logo.png', alt: 'The Pragmatic Bookshelf', class: "w-16 h-auto" %>
-  <h1 class="text-white text-3xl font-semibold tracking-wide">
-    Depot
-  </h1>
-</header>
 
+<body>
+  <header class="bg-green-700 flex items-center px-4 py-2">
+    <%= image_tag "logo.png", alt: "The Pragmatic Bookshelf", width: "100px" %>
+    <h1 class="text-white text-2xl ml-4"><%= @page_title %></h1>
+  </header>
 
   <section class="flex">
-    <nav class="bg-green-900 p-6">
-      <ul class="text-gray-300 leading-8">
+    <nav class="bg-green-900 p-6 min-h-screen">
+       <ul class="text-gray-300 leading-8">
         <li><a href="/">Home</a></li>
         <li><a href="/questions">Questions</a></li>
         <li><a href="/news">News</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul>
+
     </nav>
 
     <main class="container mx-auto mt-4 px-5 flex">
       <%= yield %>
     </main>
+
+    <nav class="bg-green-700 p-6">
+    <%= render partial: 'layouts/cart', locals: {cart:@cart} %> 
+    </nav>
   </section>
 </body>
 </html>
