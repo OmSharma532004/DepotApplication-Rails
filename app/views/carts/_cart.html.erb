@@ -1,16 +1,16 @@
 <div id="<%= dom_id cart %>" class="p-4 bg-white rounded-lg shadow-md">
 
-  <h2 class="font-bold text-xl mb-4 border-b pb-2 text-gray-800">
-    Your Cart
+  <h2 class="font-bold text-xl mb-3 border-b pb-2 text-gray-800">
+    <%= t('.title') %>
   </h2>
 
-  <table class="table-auto w-full text-sm border border-separate border-spacing-x-10 border-spacing-y-2">
+  <table class="w-full text-sm border border-gray-300">
 
     <thead>
-      <tr class="text-gray-600 px-2 border">
-        <th class="text-left  px-2  py-2">Qty</th>
-        <th class="text-left border px-2 py-2">Product</th>
-        <th class="text-right  px-2 py-2">Price</th>
+      <tr class="bg-gray-100 border-b border-gray-300 text-gray-700">
+        <th class="text-left px-2 py-2 border-r border-gray-300">Qty</th>
+        <th class="text-left px-2 py-2 border-r border-gray-300">Product</th>
+        <th class="text-right px-2 py-2">Price</th>
       </tr>
     </thead>
 
@@ -19,21 +19,20 @@
     </tbody>
 
     <tfoot>
-      <tr>
-        <th colspan="3" class="text-right pr-2 pt-3 text-gray-700">Total:</th>
-        <td class="text-right pt-3 font-bold text-lg border-t-2 border-gray-800">
+      <tr class="border-t border-gray-400">
+        <th colspan="2" class="text-right px-2 py-2 text-gray-700 border-r border-gray-300">Total:</th>
+        <td class="text-right px-2 py-2 font-bold text-lg">
           <%= number_to_currency(cart.total_price) %>
         </td>
       </tr>
     </tfoot>
   </table>
 
-  <div class="flex justify-end gap-3 mt-4">
-
+  <div class="flex justify-end gap-3 mt-3">
     <%= button_to 'Empty Cart', cart, method: :delete,
-          class: 'rounded-lg py-2 px-4 text-white bg-red-600 hover:bg-red-700 shadow-sm' %>
+          class: 'rounded-md py-2 px-4 text-white bg-red-600 hover:bg-red-700 shadow-sm' %>
 
-    <%= button_to 'Checkout', new_order_path, method: :get,
-          class: 'rounded-lg py-2 px-4 text-white bg-green-600 hover:bg-green-700 shadow-sm' %>
+    <%= button_to 'Checkout', new_order_path(locale: I18n.locale), method: :get,
+          class: 'rounded-md py-2 px-4 text-white bg-green-600 hover:bg-green-700 shadow-sm' %>
   </div>
 </div>
