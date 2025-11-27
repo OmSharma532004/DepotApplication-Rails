@@ -5,7 +5,6 @@ class CombineItemsInCart < ActiveRecord::Migration[8.1]
   def up
   # Replace multiple items for a single product in a cart with a single item
   Cart.all.each do |cart|
-
     # Count the number of each product in the cart
     sums = cart.line_items.group(:product_id).sum(:quantity)
 
@@ -26,7 +25,6 @@ end
 def down
   # Split items with quantity > 1 into multiple line items
   LineItem.where("quantity > 1").find_each do |line_item|
-
     # Create individual line items
     line_item.quantity.times do
       LineItem.create!(
@@ -40,6 +38,4 @@ def down
     line_item.destroy
   end
 end
-
-
 end

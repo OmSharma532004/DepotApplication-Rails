@@ -12,5 +12,3 @@ def ensure_an_admin_remains
   end
 end
 end
-
-

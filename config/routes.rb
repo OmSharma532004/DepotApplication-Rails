@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  get 'admin' => 'admin#index'
+  get "admin" => "admin#index"
 
   controller :sessions do
-    get    'login'  => :new
-    post   'login'  => :create
-    delete 'logout' => :destroy
+    get    "login"  => :new
+    post   "login"  => :create
+    delete "logout" => :destroy
   end
 
   # Session routes (optional)
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # I18n scoped routes
-  scope '(:locale)' do
+  scope "(:locale)" do
     resources :orders
 
     resources :line_items do
@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     end
 
     resources :carts
-    
-    root 'store#index', as: 'store_index'
+
+    root "store#index", as: "store_index"
   end
 end

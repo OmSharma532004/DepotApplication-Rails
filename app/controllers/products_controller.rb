@@ -41,7 +41,7 @@ class ProductsController < ApplicationController
       if @product.update(product_params)
         format.html { redirect_to @product, notice: "Product was successfully updated.", status: :see_other }
         format.json { render :show, status: :ok, location: @product }
-        @product.broadcast_replace_later_to 'products',partial: 'store/product'
+        @product.broadcast_replace_later_to "products", partial: "store/product"
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @product.errors, status: :unprocessable_entity }
@@ -61,12 +61,12 @@ class ProductsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_product
+    def set_product # this is used when route called include /:id that's why we get :id from params
       @product = Product.find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.
-    def product_params
+    def product_params # this is called when we submit a form and it sends a Product object
       params.expect(product: [ :title, :description, :image_url, :price ])
     end
 end

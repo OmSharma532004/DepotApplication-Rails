@@ -23,7 +23,7 @@ es:
       format:
         unit: "$US"
         precision: 2
-        separator: ","
+        separator: "."
         delimiter: "."
         format: "%n&nbsp;%u"
 

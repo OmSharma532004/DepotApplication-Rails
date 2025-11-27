@@ -1,10 +1,10 @@
 class OrdersController < ApplicationController
   include CurrentCart
   skip_before_action :authorize, only: %i[new create]
-  before_action :set_cart,only: %i[new create]
+  before_action :set_cart, only: %i[new create]
   before_action :ensure_cart_isnt_empty, only: %i[new]
   before_action :set_order, only: %i[ show edit update destroy ]
-  
+
   # GET /orders or /orders.json
   def index
     @orders = Order.all
@@ -23,7 +23,7 @@ class OrdersController < ApplicationController
   def edit
   end
 
-  # POST /orders or /orders.json
+# POST /orders or /orders.json
 def create
   @order = Order.new(order_params)
   @order.add_line_items_from_cart(@cart)
@@ -32,11 +32,11 @@ def create
     if @order.save
       Cart.destroy(session[:cart_id])
       session[:cart_id] = nil
-      ChargeOrderJob.perform_later(@order,pay_type_params.to_h)
+      ChargeOrderJob.perform_later(@order, pay_type_params.to_h)
       format.html { redirect_to store_index_url(locale: I18n.locale),
-      notice: I18n.t('.thanks') }
-      format.json do 
-        render :show, status: :created, location: @order 
+      notice: I18n.t(".thanks") }
+      format.json do
+        render :show, status: :created, location: @order
       end
     else
       format.html { render :new, status: :unprocessable_entity }
@@ -77,7 +77,7 @@ end
 
     def ensure_cart_isnt_empty
       if @cart.line_items.empty?
-        redirect_to store_index_url, notice: 'Your cart is empty'
+        redirect_to store_index_url, notice: "Your cart is empty"
       end
     end
 
@@ -101,5 +101,4 @@ def pay_type_params
     {}
   end
 end
-        
 end

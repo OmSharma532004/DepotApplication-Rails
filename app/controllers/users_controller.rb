@@ -47,7 +47,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1 or /users/1.json
+# DELETE /users/1 or /users/1.json
 def destroy
   @user.destroy!
   respond_to do |format|
@@ -58,7 +58,7 @@ def destroy
   end
 end
 
-rescue_from 'User::Error' do |exception|
+rescue_from "User::Error" do |exception|
   redirect_to users_url, notice: exception.message
 end
 
