@@ -71,6 +71,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.expect(user: [ :name, :password, :password_confirmation ])
+      params.expect(user: [ :name, :email, :password, :password_confirmation ])
     end
 end
