@@ -1,4 +1,5 @@
 class Product < ApplicationRecord
+  IMAGE_EXTENSION_REGEX = /\A.*\.(gif|jpg|png)\z/i
   # Ensures presence for essential attributes
   validates :title, :description, :image_url, presence: true
 
@@ -10,7 +11,7 @@ class Product < ApplicationRecord
 
   # Validates image_url format (only checks format if image_url is not blank)
   validates :image_url, allow_blank: true, format: {
-    with:    %r{\.(gif|jpg|png)\z}i,
+    with:    IMAGE_EXTENSION_REGEX,
     message: "must be a URL for GIF, JPG or PNG image."
   }
 
