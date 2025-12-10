@@ -22,6 +22,6 @@ class User < ApplicationRecord
   end
 
   def send_welcome_email
-    UserMailer.with(user: self).welcome_email.deliver_later
+    Rails.logger.info 'User Created Sending Email'
   end
 end
