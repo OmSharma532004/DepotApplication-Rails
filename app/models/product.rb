@@ -34,13 +34,13 @@ class Product < ApplicationRecord
 
   def set_title_to_default_after_intitialize
       self.title = 'abc'
-      puts "Title is updated"
+      Rails.logger.info "Title is updated"
   end
 
   def set_discount_price_to_price
     if discount_price.blank?
       self.discount_price = price
-      puts "Default dicount_price is set"
+      Rails.logger.info "Default dicount_price is set"
     end
   end
 end
