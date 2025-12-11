@@ -1,5 +1,6 @@
 class Order < ApplicationRecord
   has_many :line_items, dependent: :destroy
+  belongs_to :user
 
   # Scope to list all orders by date
   scope :by_date, ->(from = Date.today, to = Date.today) { where(created_at: from.beginning_of_day..to.end_of_day) }
@@ -17,6 +18,10 @@ class Order < ApplicationRecord
 
   def pay_type_name
     self.class.pay_types.key(pay_type)
+  end
+
+  def total_price
+    line_items.sum { |item| item.total_price }
   end
 
   def add_line_items_from_cart(cart)

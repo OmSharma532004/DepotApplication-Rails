@@ -8,6 +8,8 @@ class User < ApplicationRecord
   before_update  :ensure_admin_remains
   before_destroy :ensure_admin_remains
   has_secure_password
+  has_many :orders, dependent: :destroy
+  has_many :line_items, through: :orders
 
   validates :email, uniqueness: true, format: { with: EMAIL_REGEX }
 
