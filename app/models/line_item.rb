@@ -4,7 +4,7 @@ class LineItem < ApplicationRecord
   belongs_to :cart, optional: true
 
   validates :product, uniqueness: { scope: :cart,
-    message: "should happen once per cart" }, if: -> { cart.present? }
+    message: "Product already added in the cart" }, if: -> { cart.present? }
 
   def total_price
     product.price * quantity

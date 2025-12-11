@@ -1,33 +1,23 @@
-class UrlValidator < ActiveModel::EachValidator
-  ExtensionValidationRegex = /\.(gif|jpg|jpeg|png)\z/i
+PERMALINK_REGEX = /\A[a-zA-Z0-9]+(-[a-zA-Z0-9]+){2,}\z/
 
-  def validate_each(record, attribute, value)
-    unless value =~ ExtensionValidationRegex
-      record.errors.add(attribute, options[:message] || "must be a URL for GIF, JPG, JPEG, or PNG image.")
-    end
-  end
-end
-
-class PriceValidator < ActiveModel::Validator
-  def validate(record)
-    unless record.price > record.discount_price
-      record.errors.add :price, (options[:message] || "price less than discount price.")
-    end
-  end
-end
 class Product < ApplicationRecord
   # Ensures presence for essential attributes
   validates :title, :description, :image_url, presence: true
 
   # Ensures title is unique
   validates :title, uniqueness: true
+  
+  # Validates price to be a number and greater than or equal to $0.01
+  validates :price, numericality: { greater_than_or_equal_to: 0.01 }
 
   # Validates price to be a number and greater than discount_price
   validates :price,
     numericality: {
       greater_than: :discount_price
     },
-    if: -> { price.present? && discount_price.present? }
+    if: -> { price && discount_price }
+
+  validates_with PriceValidator , if: -> { price && discount_price}
 
 
   # Validates image_url format (only checks format if image_url is not blank)
@@ -37,8 +27,8 @@ class Product < ApplicationRecord
   validates :permalink,
     uniqueness: true,
     format: {
-      with: /\A[a-zA-Z]+(-[a-zA-Z]+){2,}\z/,
-      message: "must have at least 3 words separated by hyphens and contain only letters"
+      with: PERMALINK_REGEX,
+      message: "must have at least 3 words separated by hyphens and contain only letters and digits"
   }
 
   validates :description, length: { in: 5..10 }
