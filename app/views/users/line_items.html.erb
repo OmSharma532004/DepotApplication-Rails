@@ -1,0 +1,60 @@
+<div class="max-w-5xl mx-auto mt-10">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">
+    Your Line Items
+  </h1>
+
+  <% if @line_items.any? %>
+    <div class="bg-white shadow-lg rounded-xl overflow-hidden">
+      <table class="min-w-full divide-y divide-gray-300">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wide">
+              Product
+            </th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wide">
+              Quantity
+            </th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wide">
+              Price
+            </th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wide">
+              Total
+            </th>
+          </tr>
+        </thead>
+
+        <tbody class="divide-y divide-gray-200 bg-white">
+          <% @line_items.each do |item| %>
+            <tr class="hover:bg-gray-50 transition">
+              <td class="px-6 py-4 text-gray-800 font-medium">
+                <%= item.product.title %>
+              </td>
+
+              <td class="px-6 py-4 text-gray-700">
+                <%= item.quantity %>
+              </td>
+
+              <td class="px-6 py-4 text-gray-700">
+                ₹<%= item.product.price %>
+              </td>
+
+              <td class="px-6 py-4 font-semibold text-gray-900">
+                ₹<%= item.total_price %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-6 flex justify-center">
+      <%= paginate @line_items%>
+    </div>
+
+  <% else %>
+    <div class="text-center bg-white shadow-lg rounded-xl p-10">
+      <h2 class="text-xl font-semibold text-gray-700">No line items found.</h2>
+      <p class="text-gray-500 mt-2">Your previous orders' items will appear here.</p>
+    </div>
+  <% end %>
+</div>

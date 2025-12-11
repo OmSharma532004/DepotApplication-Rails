@@ -1,5 +1,6 @@
 class Order < ApplicationRecord
   has_many :line_items, dependent: :destroy
+  belongs_to :user
 
   def self.pay_types
     {
@@ -14,6 +15,10 @@ class Order < ApplicationRecord
 
   def pay_type_name
     self.class.pay_types.key(pay_type)
+  end
+
+  def total_price
+    line_items.sum { |item| item.total_price }
   end
 
   def add_line_items_from_cart(cart)
