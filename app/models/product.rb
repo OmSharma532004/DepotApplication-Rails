@@ -6,7 +6,7 @@ class Product < ApplicationRecord
 
   # Ensures title is unique
   validates :title, uniqueness: true
-  
+
   # Validates price to be a number and greater than or equal to $0.01
   validates :price, numericality: { greater_than_or_equal_to: 0.01 }
 
@@ -17,7 +17,7 @@ class Product < ApplicationRecord
     },
     if: -> { price && discount_price }
 
-  validates_with PriceValidator , if: -> { price && discount_price}
+  validates_with PriceValidator, if: -> { price && discount_price }
 
 
   # Validates image_url format (only checks format if image_url is not blank)
