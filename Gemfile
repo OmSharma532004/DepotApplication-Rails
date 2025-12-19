@@ -19,7 +19,7 @@ gem "tailwindcss-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
-gem 'kaminari'
+gem "kaminari"
 
 
 gem "bcrypt", "~> 3.1.7"
