@@ -2,10 +2,10 @@ class Error < StandardError; end
 
 class User < ApplicationRecord
   EMAIL_REGEX = /\A[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\z/
-  
-  after_commit :send_welcome_email ,on: :create
-  before_destroy :admin_cannot_be_modified_or_destroyed, if: ->() {email == 'admin@depot.com'}
-  before_update :admin_cannot_be_modified_or_destroyed, if: ->() {email == 'admin@depot.com'}
+
+  after_commit :send_welcome_email, on: :create
+  before_destroy :admin_cannot_be_modified_or_destroyed, if: ->() { email == "admin@depot.com" }
+  before_update :admin_cannot_be_modified_or_destroyed, if: ->() { email == "admin@depot.com" }
   after_destroy :ensure_an_admin_remains
   has_secure_password
 
@@ -22,6 +22,6 @@ class User < ApplicationRecord
   end
 
   def send_welcome_email
-    Rails.logger.info 'User Created Sending Email'
+    Rails.logger.info "User Created Sending Email"
   end
 end
