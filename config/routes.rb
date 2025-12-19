@@ -12,8 +12,11 @@ Rails.application.routes.draw do
   get "sessions/new"
   get "sessions/create"
   get "sessions/destroy"
-
   resources :users
+  get "my_orders", to: "users#orders"
+  get "my_line_items", to: "users#line_items", as: :user_line_items
+
+
   resources :products
 
   get "up" => "rails/health#show", as: :rails_health_check
