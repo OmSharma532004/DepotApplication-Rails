@@ -1,6 +1,6 @@
-PERMALINK_REGEX = /\A[a-zA-Z0-9]+(-[a-zA-Z0-9]+){2,}\z/
-
 class Product < ApplicationRecord
+  PERMALINK_REGEX = /\A[a-zA-Z0-9]+(-[a-zA-Z0-9]+){2,}\z/
+
   # Ensures presence for essential attributes
   validates :title, :description, :image_url, presence: true
 
@@ -17,7 +17,7 @@ class Product < ApplicationRecord
     },
     if: -> { price && discount_price }
 
-  validates_with PriceValidator, if: -> { price && discount_price }
+  validates_with PriceValidator
 
 
   # Validates image_url format (only checks format if image_url is not blank)

@@ -1,5 +1,5 @@
 class UrlValidator < ActiveModel::EachValidator
-  IMAGE_EXT_REGEX = /\.(gif|jpg|jpeg|png)\z/i
+  IMAGE_EXT_REGEX = /\Ahttps?:\/\/.+\.(gif|jpg|jpeg|png)(\?.*)?\z/i
 
   def validate_each(record, attribute, value)
     return if value.blank?
