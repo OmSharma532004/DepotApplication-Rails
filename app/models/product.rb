@@ -18,7 +18,7 @@ class Product < ApplicationRecord
   # Validates image_url format (only checks format if image_url is not blank)
   validates :image_url, allow_blank: true, format: {
     with:    IMAGE_EXTENSION_REGEX,
-    message: "must be a URL for GIF, JPG or PNG image."
+    message: "must be a URL for GIF, JPG  or PNG image."
   }
 
   has_many :line_items # this is basically added to connect with line item
