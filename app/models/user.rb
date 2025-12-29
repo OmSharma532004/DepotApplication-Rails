@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   def protect_admin
     if email_was == "admin@depot.com"
-    errors.add(:base, 'Admin cannot be changed')
+    errors.add(:base, "Admin cannot be changed")
     throw(:abort)
     end
   end
