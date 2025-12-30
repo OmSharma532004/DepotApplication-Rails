@@ -1,5 +1,11 @@
 class Product < ApplicationRecord
-  IMAGE_EXTENSION_REGEX = /\A.*\.(gif|jpg|png)\z/i
+    IMAGE_EXTENSION_REGEX = /\A.*\.(gif|jpg|png)\z/i
+
+  # Set title to 'abc'
+  after_initialize :set_title_to_default_after_intitialize, if: ->() { new_record? && title.blank? }
+  # set discount_price to price if not specified
+  after_initialize :set_discount_price_to_price, if: -> () { new_record? && discount_price.blank? }
+
   # Ensures presence for essential attributes
   validates :title, :description, :image_url, presence: true
 
@@ -12,7 +18,7 @@ class Product < ApplicationRecord
   # Validates image_url format (only checks format if image_url is not blank)
   validates :image_url, allow_blank: true, format: {
     with:    IMAGE_EXTENSION_REGEX,
-    message: "must be a URL for GIF, JPG or PNG image."
+    message: "must be a URL for GIF, JPG  or PNG image."
   }
 
   has_many :line_items # this is basically added to connect with line item
@@ -24,5 +30,13 @@ class Product < ApplicationRecord
       errors.add(:base, "Line Items present")
       throw :abort
     end
+  end
+
+  def set_title_to_default_after_intitialize
+    self.title = "abc"
+  end
+
+  def set_discount_price_to_price
+    self.discount_price = price
   end
 end
