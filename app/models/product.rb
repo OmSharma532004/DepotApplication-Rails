@@ -31,7 +31,7 @@ class Product < ApplicationRecord
       message: "must have at least 3 words separated by hyphens and contain only letters and digits"
   }
 
-  validates :description, length: { in: 5..10 }
+  validates :description, length: { in: 5..10 }, allow_blank: true
 
 
   has_many :line_items # this is basically added to connect with line item
