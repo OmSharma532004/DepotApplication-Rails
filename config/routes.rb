@@ -13,8 +13,7 @@ Rails.application.routes.draw do
   get "sessions/create"
   get "sessions/destroy"
   resources :users
-  get "my_orders", to: "users#orders"
-  get "my_line_items", to: "users#line_items", as: :user_line_items
+
 
 
   resources :products
@@ -23,6 +22,9 @@ Rails.application.routes.draw do
 
   # I18n scoped routes
   scope "(:locale)" do
+    get "user/orders", to: "users#orders", as: :user_orders
+
+    get "user/line_items", to: "users#line_items", as: :user_line_items
     resources :orders
 
     resources :line_items do
