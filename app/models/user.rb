@@ -19,6 +19,6 @@ class User < ApplicationRecord
   end
 
   def send_welcome_email
-    Rails.logger.info "User Created Sending Email"
+    # Will be added later
   end
 end

@@ -1,10 +1,11 @@
 class Product < ApplicationRecord
     IMAGE_EXTENSION_REGEX = /\A.*\.(gif|jpg|png)\z/i
+    DEFAULT_TITLE = "abc"
 
   # Set title to 'abc'
-  after_initialize :set_title_to_default_after_intitialize, if: ->() { new_record? && title.blank? }
+  after_initialize :set_default_title, if: ->() { new_record? && title.blank? }
   # set discount_price to price if not specified
-  after_initialize :set_discount_price_to_price, if: -> () { new_record? && discount_price.blank? }
+  after_initialize :set_discount_price, if: -> () { new_record? && discount_price.blank? }
 
   # Ensures presence for essential attributes
   validates :title, :description, :image_url, presence: true
@@ -32,11 +33,11 @@ class Product < ApplicationRecord
     end
   end
 
-  def set_title_to_default_after_intitialize
-    self.title = "abc"
+  def set_default_title
+    self.title = DEFAULT_TITLE
   end
 
-  def set_discount_price_to_price
+  def set_discount_price
     self.discount_price = price
   end
 end
