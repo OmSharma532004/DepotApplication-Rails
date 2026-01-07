@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema[8.1].define(version: 2026_01_21_062325) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
@@ -77,13 +78,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_09_105425) do
   create_table "addresses", force: :cascade do |t|
     t.bigint "addressable_id"
     t.string "addressable_type"
+=======
+ActiveRecord::Schema[8.1].define(version: 2026_01_09_105425) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+>>>>>>> 8be9e96 (Applied all)
     t.string "city", null: false
     t.string "country", null: false
     t.datetime "created_at", null: false
     t.bigint "pincode", null: false
     t.string "state", null: false
     t.datetime "updated_at", null: false
+<<<<<<< HEAD
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable"
+=======
+>>>>>>> 8be9e96 (Applied all)
   end
 
   create_table "carts", force: :cascade do |t|
@@ -141,6 +152,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_09_105425) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.bigint "address_id"
     t.datetime "created_at", null: false
     t.string "email"
     t.string "language", default: "english"
@@ -148,15 +160,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_09_105425) do
     t.string "password_digest"
     t.string "role", default: "user"
     t.datetime "updated_at", null: false
+    t.index ["address_id"], name: "index_users_on_address_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+<<<<<<< HEAD
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+=======
+>>>>>>> 8be9e96 (Applied all)
   add_foreign_key "categories", "categories", column: "parent_id"
   add_foreign_key "line_items", "carts"
   add_foreign_key "line_items", "orders"
   add_foreign_key "line_items", "products"
   add_foreign_key "orders", "users"
   add_foreign_key "products", "categories"
+<<<<<<< HEAD
+=======
+  add_foreign_key "users", "addresses"
+>>>>>>> 8be9e96 (Applied all)
 end
