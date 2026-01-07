@@ -96,10 +96,10 @@ class Product < ApplicationRecord
   end
 
   def update_counters(category, by)
-    category.increment!(:product_count, by)
+    category.increment!(:products_count, by)
 
     if category.parent.present?
-      category.parent.increment!(:product_count, by)
+      category.parent.increment!(:products_count, by)
     end
 
   end

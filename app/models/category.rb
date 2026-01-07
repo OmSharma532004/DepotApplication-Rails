@@ -13,6 +13,9 @@ class Category < ApplicationRecord
   has_many :products,
            dependent: :restrict_with_error
 
+  has_many :sub_category_products, through: :sub_categories, source: :products,
+            dependent: :restrict_with_error
+
   validates :name, presence: true
   validates :name, uniqueness: { scope: :parent_id }, if: -> { name.present? }
 
@@ -22,13 +25,14 @@ class Category < ApplicationRecord
   private
 
   def only_one_level_nesting
-    if parent&.parent_id.present?
+    if parent&.parent.present?
       errors.add(:base, "Sub-category cannot have child categories")
+      throw(:abort)
     end
   end
 
   def ensure_no_products_in_tree
-    if products.exists? || sub_categories.joins(:products).exists?
+    if products.exists? || sub_category_products.exists?
       errors.add(:base, "Cannot delete category with associated products")
       throw(:abort)
     end
