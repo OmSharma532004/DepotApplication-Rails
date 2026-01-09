@@ -4,9 +4,15 @@
     Your Orders
   </h1>
 
-  <% if @orders.any? %>
+  <%
+    orders = @user
+               .orders
+               .includes(line_items: :product)
+  %>
 
-    <% @orders.each do |order| %>
+  <% if orders.any? %>
+
+    <% orders.each do |order| %>
       <div class="bg-white shadow-md rounded-2xl p-6 mb-10 border border-gray-200">
 
         <!-- Order Header -->
@@ -22,9 +28,20 @@
 
         <!-- Order Details -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-gray-700">
-          <p><span class="font-semibold">Name:</span> <%= order.name %></p>
-          <p><span class="font-semibold">Email:</span> <%= order.email %></p>
-          <p><span class="font-semibold">Address:</span> <%= order.address %></p>
+          <p>
+            <span class="font-semibold">Name:</span>
+            <%= order.name %>
+          </p>
+
+          <p>
+            <span class="font-semibold">Email:</span>
+            <%= order.email %>
+          </p>
+
+          <p>
+            <span class="font-semibold">Address:</span>
+            <%= order.address %>
+          </p>
         </div>
 
         <!-- Line Items -->
@@ -51,9 +68,13 @@
                       <%= item.product.title %>
                     </td>
 
-                    <td class="px-4 py-3"><%= item.quantity %></td>
+                    <td class="px-4 py-3">
+                      <%= item.quantity %>
+                    </td>
 
-                    <td class="px-4 py-3">₹<%= item.product.price %></td>
+                    <td class="px-4 py-3">
+                      ₹<%= item.product.price %>
+                    </td>
 
                     <td class="px-4 py-3 font-semibold">
                       ₹<%= item.total_price %>
@@ -61,11 +82,12 @@
                   </tr>
                 <% end %>
               </tbody>
-
             </table>
           </div>
         <% else %>
-          <p class="text-gray-500">No items in this order.</p>
+          <p class="text-gray-500">
+            No items in this order.
+          </p>
         <% end %>
 
         <!-- Total Price Box -->
