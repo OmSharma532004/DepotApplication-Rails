@@ -97,5 +97,4 @@ end
   def set_discount_price
     self.discount_price = price
   end
-
 end
