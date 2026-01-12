@@ -9,6 +9,8 @@ class User < ApplicationRecord
   before_destroy :ensure_admin_remains
   has_secure_password
 
+  validates :email, uniqueness: true, format: { with: EMAIL_REGEX }
+
   private
 
   def ensure_admin_remains
