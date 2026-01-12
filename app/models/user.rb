@@ -6,7 +6,9 @@ class User < ApplicationRecord
 
   after_commit :send_welcome_email, on: :create
   before_update  :ensure_admin_remains
-  before_destroy :ensure_admin_remains
+  belongs_to :address, optional: true
+  after_destroy :ensure_an_admin_remains
+
   has_secure_password
   has_many :orders, dependent: :destroy
   has_many :line_items, through: :orders
