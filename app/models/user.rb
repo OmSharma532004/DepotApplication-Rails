@@ -1,6 +1,7 @@
 class Error < StandardError; end
 
 class User < ApplicationRecord
+  belongs_to :address, optional: true
   after_destroy :ensure_an_admin_remains
   has_secure_password
   has_many :orders, dependent: :destroy
