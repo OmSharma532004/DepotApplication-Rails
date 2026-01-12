@@ -1,5 +1,14 @@
 class Product < ApplicationRecord
+
+    DEFAULT_TITLE = "abc"
+
+  # Set title to 'abc'
+  after_initialize :set_default_title, if: ->() { new_record? && title.blank? }
+  # set discount_price to price if not specified
+  after_initialize :set_discount_price, if: -> () { new_record? && discount_price.blank? }
+
   PERMALINK_REGEX = /\A[a-zA-Z0-9]+(-[a-zA-Z0-9]+){2,}\z/
+
 
   # Ensures presence for essential attributes
   validates :title, :description, :image_url, presence: true
@@ -21,6 +30,7 @@ class Product < ApplicationRecord
 
 
   # Validates image_url format (only checks format if image_url is not blank)
+
   validates :image_url, allow_blank: true, url: true
 
   # Validates PermaLink to be uniuque,minimum 3 words ,seperated by hyphen and no special characters and space
@@ -29,6 +39,7 @@ class Product < ApplicationRecord
     format: {
       with: PERMALINK_REGEX,
       message: "must have at least 3 words separated by hyphens and contain only letters and digits"
+
   }
 
   validates :description, length: { in: 5..10 }, allow_blank: true
@@ -43,5 +54,13 @@ class Product < ApplicationRecord
       errors.add(:base, "Line Items present")
       throw :abort
     end
+  end
+
+  def set_default_title
+    self.title = DEFAULT_TITLE
+  end
+
+  def set_discount_price
+    self.discount_price = price
   end
 end

@@ -1,16 +1,26 @@
 class Error < StandardError; end
 
 class User < ApplicationRecord
-  after_destroy :ensure_an_admin_remains
+  ADMIN_EMAIL = "admin@depot.com"
+  EMAIL_REGEX = /\A[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\z/
+
+  after_commit :send_welcome_email, on: :create
+  before_update  :ensure_admin_remains
+  before_destroy :ensure_admin_remains
   has_secure_password
 
   validates :email, uniqueness: true, format: { with: EMAIL_REGEX }
 
   private
 
-def ensure_an_admin_remains
-  if User.count.zero?
-    raise Error.new("Can't delete last user")
+  def ensure_admin_remains
+    if email_was == ADMIN_EMAIL
+    errors.add(:base, "Admin cannot be changed")
+    throw(:abort)
+    end
   end
-end
+
+  def send_welcome_email
+    # Will be added later
+  end
 end

@@ -17,6 +17,9 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :test
 
+  config.action_mailer.perform_deliveries = true
+
+
   # Enable/disable Action Controller caching. By default Action Controller caching is disabled.
   # Run rails dev:cache to toggle Action Controller caching.
   if Rails.root.join("tmp/caching-dev.txt").exist?
