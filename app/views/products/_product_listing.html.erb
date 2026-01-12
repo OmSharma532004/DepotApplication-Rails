@@ -2,7 +2,7 @@
 
           <!-- Product Image -->
           <div class="w-full h-48 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center mb-4">
-            <%= image_tag(product.image_url, alt: product.title, class: "object-cover w-full h-full") if product.image_url.present? %>
+            <%= image_tag(product.images.first, alt: product.title, class: "object-cover w-full h-full") if product.images.first.present? %>
           </div>
 
           <!-- Product Title -->

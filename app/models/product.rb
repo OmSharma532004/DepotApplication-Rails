@@ -1,20 +1,19 @@
 class Product < ApplicationRecord
   IMAGE_EXTENSION_REGEX = /\A.*\.(gif|jpg|png)\z/i
+  MAX_IMAGES = 3
+
   belongs_to :category
+  has_many_attached :images
   # Ensures presence for essential attributes
-  validates :title, :description, :image_url, presence: true
+  validates :title, :description, presence: true
+
+  validate :images_count_within_limit
 
   # Ensures title is unique
   validates :title, uniqueness: true
 
   # Validates price to be a number and greater than or equal to $0.01
   validates :price, numericality: { greater_than_or_equal_to: 0.01 }
-
-  # Validates image_url format (only checks format if image_url is not blank)
-  validates :image_url, allow_blank: true, format: {
-    with:    IMAGE_EXTENSION_REGEX,
-    message: "must be a URL for GIF, JPG or PNG image."
-  }
 
   has_many :line_items, dependent: :restrict_with_error # add error trying to destroy a product that is assigned to a line_item
   has_many :cart, through: :line_items
@@ -32,6 +31,15 @@ class Product < ApplicationRecord
       throw :abort
     end
   end
+
+  def images_count_within_limit
+    return unless images.attached?
+
+    if images.count > MAX_IMAGES
+      errors.add(:images, "cannot have more than #{MAX_IMAGES} images")
+    end
+  end
+
 
   def increment_category_counters
     update_counters(category, 1)

@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[ show edit update destroy ]
-  before_action :set_categories, only: %i[ new edit ]
+  before_action :set_categories, only: %i[ new edit create ]
 
   # GET /products or /products.json
   def index
@@ -69,7 +69,7 @@ class ProductsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def product_params # this is called when we submit a form and it sends a Product object
       puts params
-      params.expect(product: [ :title, :description, :image_url, :price, :category_id ])
+      params.expect(product: [ :title, :description, :image_url, :price, :category_id, images: [] ])
     end
 
     def set_categories
