@@ -2,7 +2,7 @@ class Product < ApplicationRecord
   IMAGE_EXTENSION_REGEX = /\A.*\.(gif|jpg|png)\z/i
 
   # Scope for all enabled products
-  scope :all_enabled_products, -> { Product.where(enabled: true) }
+  scope :all_enabled_products, -> { where(enabled: true) }
 
 
   # Ensures presence for essential attributes
