@@ -15,7 +15,10 @@ Rails.application.routes.draw do
 
   resources :categories
 
-  resources :users
+  resources :users do
+    get "orders", on: :collection
+    get "line_items", on: :collection
+  end
 
 
 
@@ -25,9 +28,6 @@ Rails.application.routes.draw do
 
   # I18n scoped routes
   scope "(:locale)" do
-    get "user/orders", to: "users#orders", as: :user_orders
-
-    get "user/line_items", to: "users#line_items", as: :user_line_items
     resources :orders
 
     resources :line_items do

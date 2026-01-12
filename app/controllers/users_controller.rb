@@ -2,7 +2,8 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
   before_action :set_logged_in_user, only: %i[ orders line_items ]
 
-  layout "myorders", only: [:orders, :line_items]
+  layout "myorders", only: [ :orders, :line_items ]
+
 
 
   # GET /users or /users.json
@@ -81,7 +82,7 @@ end
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.expect(user: [ :name, :email, :password, :password_confirmation])
+      params.expect(user: [ :name, :email, :password, :password_confirmation ])
     end
 
     def address_params
