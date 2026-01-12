@@ -4,6 +4,7 @@ class OrdersController < ApplicationController
   before_action :set_cart, only: %i[new create]
   before_action :ensure_cart_isnt_empty, only: %i[new]
   before_action :set_order, only: %i[ show edit update destroy ]
+  before_action :set_user, only: %i[ create ]
 
   # GET /orders or /orders.json
   def index
@@ -25,9 +26,8 @@ class OrdersController < ApplicationController
 
 # POST /orders or /orders.json
 def create
-  @order = Order.new(order_params)
+  @order = @user.orders.build(order_params)
   @order.add_line_items_from_cart(@cart)
-  @order.user = User.find(session[:user_id])
 
   respond_to do |format|
     if @order.save
@@ -71,6 +71,10 @@ end
   end
 
   private
+
+    def set_user
+      @user = User.find(session[:user_id])
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_order
       @order = Order.find(params.expect(:id))
