@@ -26,6 +26,8 @@
     <h1 class="text-2xl font-bold"><%= @page_title %></h1>
   </div>
 
+  <h1> <%= " #{request.path}-responded-in-#{session[:duration]}"%> </h1>
+
   <!-- Right: Language Selector -->
   <aside data-controller="locale" class="text-right">
 <%= form_tag store_index_path, method: :get, class: "locale flex items-center space-x-2" do %>
@@ -91,4 +93,15 @@
     </nav>
   </section>
 </body>
+
+<footer class="border-t border-gray-200 py-4 text-center text-sm text-gray-500">
+  Your visits:
+  <span class="font-semibold text-gray-700">
+    <%= session[:hit_count] %>
+  </span>
+  <div>
+  Your Ip Address is <%= request.ip %>
+  </div>
+</footer>
+
 </html>
