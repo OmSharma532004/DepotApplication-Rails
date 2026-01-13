@@ -26,6 +26,10 @@ class Category < ApplicationRecord
     products + sub_category_products
   end
 
+  def all_products
+    products + sub_category_products
+  end
+
   private
 
   def only_one_level_nesting
