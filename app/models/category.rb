@@ -22,6 +22,10 @@ class Category < ApplicationRecord
   validate :only_one_level_nesting
   before_destroy :ensure_no_products_in_tree
 
+  def all_products
+    products + sub_category_products
+  end
+
   private
 
   def only_one_level_nesting

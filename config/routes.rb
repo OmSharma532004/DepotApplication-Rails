@@ -19,18 +19,20 @@ Rails.application.routes.draw do
     get "reports", to: "reports#index"
     post "reports", to: "reports#index"
     get "categories", to: "categories#index"
+    get "categories/:id/products", to: "categories#products", as: :category_products, constraints: { id: /\d+/ }
+    get "categories/:id/products", to: redirect("/")
   end
 
   resources :categories
 
-  resources :users do
-    get "orders", on: :collection
-    get "line_items", on: :collection
-  end
+  resources :users
+
+  get "my-orders", to: "users#orders"
+  get "my-line_items", to: 'users#line_items'
 
 
 
-  resources :products
+  resources :products, path: 'books'
 
   get "up" => "rails/health#show", as: :rails_health_check
 
