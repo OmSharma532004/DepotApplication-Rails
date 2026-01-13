@@ -1,0 +1,40 @@
+ <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition p-5 flex flex-col">
+
+          <!-- Product Image -->
+          <div class="w-full h-48 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center mb-4">
+            <%= image_tag(product.images.first, alt: product.title, class: "object-cover w-full h-full") if product.images.first.present? %>
+          </div>
+
+          <!-- Product Title -->
+          <h2 class="font-semibold text-xl text-gray-900 mb-2">
+            <%= product.title %>
+          </h2>
+
+          <!-- Description -->
+          <p class="text-gray-600 text-sm mb-3 line-clamp-3">
+            <%= product.description %>
+          </p>
+
+          <!-- Price -->
+          <p class="text-lg font-bold text-green-700 mb-4">
+            <%= number_to_currency(product.price) %>
+          </p>
+
+          <!-- Buttons -->
+          <div class="mt-auto flex space-x-2">
+            <%= link_to "Show",
+              product,
+              class: "flex-1 text-center rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-200 font-medium" %>
+
+            <%= link_to "Edit",
+              edit_product_path(product),
+              class: "flex-1 text-center rounded-lg px-3 py-2 bg-yellow-100 hover:bg-yellow-200 font-medium" %>
+
+            <%= button_to "Delete",
+              product,
+              method: :delete,
+              data: { turbo_confirm: "Are you sure?" },
+              class: "flex-1 rounded-lg px-3 py-2 bg-red-600 hover:bg-red-500 text-white font-medium" %>
+          </div>
+
+        </div>
