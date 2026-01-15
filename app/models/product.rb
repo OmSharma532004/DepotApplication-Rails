@@ -1,4 +1,5 @@
 class Product < ApplicationRecord
+  scope :is_enabled, -> { where( enabled: true )}
   IMAGE_EXTENSION_REGEX = /\A.*\.(gif|jpg|png)\z/i
   # Ensures presence for essential attributes
   validates :title, :description, :image_url, presence: true
