@@ -1,8 +1,9 @@
 class ApplicationController < ActionController::Base
   before_action :authorize,
-                :set_i18n_locale_from_params,
                 :count_session_hits,
-                :inactive_logout
+                :inactive_logout,
+                :set_i18n_locale_from_params,
+                :set_user_preferred_language
 
   around_action :measure_execution_time
   # Only allow modern browsers supporting webp images, web push, badges,
@@ -43,6 +44,16 @@ class ApplicationController < ActionController::Base
   def count_session_hits
     session[:hit_count] ||= 0
     session[:hit_count] += 1
+  end
+
+  def set_user_preferred_language()
+    locale = AppConstants::LOCALE_MAP[User.find_by(id: session[:user_id])&.language] || I18n.default_locale
+    if I18n.available_locales.include?(locale)
+      I18n.locale = locale
+    else
+      flash.now[:notice] = "#{locale} translation not available"
+        logger.error flash.now[:notice]
+    end
   end
 
   def set_i18n_locale_from_params
