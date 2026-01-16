@@ -1,14 +1,13 @@
 class UserMailer < ApplicationMailer
-  def send_order_confirmation
-    @user  = params[:user]
-    @order = params[:order]
+  before_action :set_user, :set_order
+  around_action :switch_locale
 
+  def send_order_confirmation
     @line_items = @order.line_items.includes(
       product: { images_attachments: :blob }
     )
-
+    headers['X-SYSTEM-PROCESS-ID'] = Process.pid.to_s
     attach_product_images
-
     mail(
       to: @user.email,
       subject: "Order Confirmation ##{@order.id}"
@@ -16,6 +15,19 @@ class UserMailer < ApplicationMailer
   end
 
   private
+
+  def set_user
+    @user = params[:user]
+  end
+
+  def set_order
+    @order = params[:order]
+  end
+
+  def switch_locale(&action)
+    locale = AppConstants::LOCALE_MAP[@user.language] || I18n.default_locale
+    I18n.with_locale(locale,&action)
+  end
 
   def attach_product_images
     @line_items.each do |item|

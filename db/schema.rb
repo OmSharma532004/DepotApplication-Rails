@@ -12,6 +12,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ActiveRecord::Schema[8.1].define(version: 2026_01_21_062325) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
@@ -45,6 +46,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_21_062325) do
   end
 
 ActiveRecord::Schema[8.1].define(version: 2026_01_09_105425) do
+=======
+ActiveRecord::Schema[8.1].define(version: 2026_01_15_104551) do
+>>>>>>> fed4a61 (Implemented Mailer&I18n)
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 

@@ -1,75 +1,81 @@
 <h2 style="margin:0 0 12px; font-size:20px; color:#222;">
-  Order Confirmed 🎉
+  <%= t("mailer.order.heading") %>
 </h2>
 
 <p style="margin:0 0 12px; font-size:14px; color:#444;">
-  Hi <strong><%= @user.name %></strong>,
+  <%= t("mailer.order.greeting", name: @user.name) %>
 </p>
 
 <p style="margin:0 0 16px; font-size:14px; line-height:1.6; color:#444;">
-  Thank you for your order! We’re happy to let you know that your order has been
-  successfully placed.
+  <%= t("mailer.order.thank_you") %>
 </p>
 
 <hr style="border:none; border-top:1px solid #e5e7eb; margin:16px 0;">
 
 <table width="100%" cellpadding="0" cellspacing="0" style="font-size:14px; color:#444;">
   <tr>
-    <td style="padding:6px 0; font-weight:600;">Order Date</td>
+    <td style="padding:6px 0; font-weight:600;">
+      <%= t("mailer.order.order_date") %>
+    </td>
     <td style="padding:6px 0; text-align:right;">
-      <%= @order.created_at.strftime("%d %b %Y") %>
+      <%= l(@order.created_at.to_date, format: :long) %>
     </td>
   </tr>
 </table>
 
-      <table class="min-w-full divide-y divide-gray-300">
-        <thead class="bg-gray-100">
-          <tr>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wide">
-              Product
-            </th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wide">
-              Quantity
-            </th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wide">
-              Price
-            </th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700 uppercase tracking-wide">
-              Total
-            </th>
-          </tr>
-        </thead>
+<table width="100%" cellpadding="0" cellspacing="0" style="margin-top:16px; font-size:14px; border-collapse:collapse;">
+  <thead>
+    <tr style="background:#f3f4f6;">
+      <th align="left" style="padding:8px; border-bottom:1px solid #ddd;">
+        <%= t("mailer.order.product") %>
+      </th>
+      <th align="left" style="padding:8px; border-bottom:1px solid #ddd;">
+        <%= t("mailer.order.quantity") %>
+      </th>
+      <th align="left" style="padding:8px; border-bottom:1px solid #ddd;">
+        <%= t("mailer.order.price") %>
+      </th>
+      <th align="left" style="padding:8px; border-bottom:1px solid #ddd;">
+        <%= t("mailer.order.total") %>
+      </th>
+    </tr>
+  </thead>
 
-        <tbody class="divide-y divide-gray-200 bg-white">
-          <% @order.line_items.each do |item| %>
-            <tr class="hover:bg-gray-50 transition">
-              <td class="px-6 py-4 text-gray-800 font-medium">
-                <%= item.product.title %>
-              </td>
-
-              <td class="px-6 py-4 text-gray-700">
-                <%= item.quantity %>
-              </td>
-
-              <td class="px-6 py-4 text-gray-700">
-                ₹<%= item.product.price %>
-              </td>
-
-              <td class="px-6 py-4 font-semibold text-gray-900">
-                ₹<%= item.total_price %>
-              </td>
-            </tr>
+  <tbody>
+    <% @line_items.each do |item| %>
+      <tr>
+        <td style="padding:8px; border-bottom:1px solid #eee;">
+          <% if @inline_images&.[](item.product.id) %>
+            <img
+              src="cid:<%= @inline_images[item.product.id] %>"
+              alt="<%= item.product.title %>"
+              style="width:60px; height:auto; display:block; margin-bottom:6px;"
+            >
           <% end %>
-        </tbody>
-      </table>
+          <%= item.product.title %>
+        </td>
 
+        <td style="padding:8px; border-bottom:1px solid #eee;">
+          <%= item.quantity %>
+        </td>
 
+        <td style="padding:8px; border-bottom:1px solid #eee;">
+          ₹<%= item.product.price %>
+        </td>
 
-<p style="margin:0 0 8px; font-size:14px; color:#444;">
-  We’ll notify you once your order is shipped.
+        <td style="padding:8px; border-bottom:1px solid #eee; font-weight:600;">
+          ₹<%= item.total_price %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<p style="margin:16px 0 8px; font-size:14px; color:#444;">
+  <%= t("mailer.order.shipping_notice") %>
 </p>
 
 <p style="margin:16px 0 0; font-size:14px; color:#444;">
-  Thanks,<br>
-  <strong>The Example Team</strong>
+  <%= t("mailer.order.thanks") %><br>
+  <strong><%= t("mailer.order.team") %></strong>
 </p>
