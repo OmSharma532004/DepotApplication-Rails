@@ -1,6 +1,12 @@
 class Product < ApplicationRecord
 
-    DEFAULT_TITLE = "abc"
+  IMAGE_EXTENSION_REGEX = /\A.*\.(gif|jpg|png)\z/i
+
+  # Scope for all enabled products
+  scope :all_enabled_products, -> { where(enabled: true) }
+
+
+  DEFAULT_TITLE = "abc"
 
   # Set title to 'abc'
   after_initialize :set_default_title, if: ->() { new_record? && title.blank? }

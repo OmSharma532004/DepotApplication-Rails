@@ -1,0 +1,23 @@
+Query 1:- 
+depot(dev):003> Product.where.associated(:line_items).distinct
+  Product Load (1.5ms)  SELECT DISTINCT "products".* FROM "products" INNER JOIN "line_items" ON "line_items"."product_id" = "products"."id" WHERE "line_items"."id" IS NOT NULL /* loading for pp */ LIMIT 11 /*application='Depot'*/
+=> 
+[#<Product:0x00007b2535cc0f08
+  id: 3,
+  created_at: "2025-11-19 11:45:55.464491000 +0000",
+  description: "Stylish coffee table made of walnut with a smooth ...",
+  image_url: "coffee_table.png",
+  price: 0.895e2,
+  title: "Coffee Table",
+  updated_at: "2026-01-07 09:06:34.674435000 +0000",
+  enabled: nil,
+  discount_price: nil,
+  permalink: nil,
+  category_id: 6>,
+...]
+
+
+Query 2:-
+depot(dev):004> Product.where.associated(:line_items).distinct.pluck(:title)
+  Product Pluck (1.0ms)  SELECT DISTINCT "products"."title" FROM "products" INNER JOIN "line_items" ON "line_items"."product_id" = "products"."id" WHERE "line_items"."id" IS NOT NULL /*application='Depot'*/
+=> ["Bluetooth Speaker", "Coffee Table", "Leather Wallet"]
