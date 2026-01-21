@@ -13,13 +13,21 @@ Rails.application.routes.draw do
   get "sessions/create"
   get "sessions/destroy"
 
+  resources :categories
+
   resources :users
+
+
+
   resources :products
 
   get "up" => "rails/health#show", as: :rails_health_check
 
   # I18n scoped routes
   scope "(:locale)" do
+    get "user/orders", to: "users#orders", as: :user_orders
+
+    get "user/line_items", to: "users#line_items", as: :user_line_items
     resources :orders
 
     resources :line_items do

@@ -1,0 +1,115 @@
+<div class="max-w-5xl mx-auto py-10">
+
+  <h1 class="text-4xl font-bold mb-8 text-gray-800">
+    Your Orders
+  </h1>
+
+  <%
+    orders = @user
+               .orders
+               .includes(line_items: :product)
+  %>
+
+  <% if orders.any? %>
+
+    <% orders.each do |order| %>
+      <div class="bg-white shadow-md rounded-2xl p-6 mb-10 border border-gray-200">
+
+        <!-- Order Header -->
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-semibold text-blue-600">
+            Order #<%= order.id %>
+          </h2>
+
+          <span class="px-4 py-1 text-sm rounded-full bg-blue-100 text-blue-700">
+            <%= order.pay_type_name %>
+          </span>
+        </div>
+
+        <!-- Order Details -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 text-gray-700">
+          <p>
+            <span class="font-semibold">Name:</span>
+            <%= order.name %>
+          </p>
+
+          <p>
+            <span class="font-semibold">Email:</span>
+            <%= order.email %>
+          </p>
+
+          <p>
+            <span class="font-semibold">Address:</span>
+            <%= order.address %>
+          </p>
+        </div>
+
+        <!-- Line Items -->
+        <h3 class="text-xl font-semibold text-gray-800 mb-4">
+          Order Items
+        </h3>
+
+        <% if order.line_items.any? %>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-gray-100 text-gray-700">
+                  <th class="px-4 py-3 font-medium">Product</th>
+                  <th class="px-4 py-3 font-medium">Quantity</th>
+                  <th class="px-4 py-3 font-medium">Price</th>
+                  <th class="px-4 py-3 font-medium">Total</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% order.line_items.each do |item| %>
+                  <tr class="border-b hover:bg-gray-50 transition">
+                    <td class="px-4 py-3 text-gray-800">
+                      <%= item.product.title %>
+                    </td>
+
+                    <td class="px-4 py-3">
+                      <%= item.quantity %>
+                    </td>
+
+                    <td class="px-4 py-3">
+                      ₹<%= item.product.price %>
+                    </td>
+
+                    <td class="px-4 py-3 font-semibold">
+                      ₹<%= item.total_price %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <p class="text-gray-500">
+            No items in this order.
+          </p>
+        <% end %>
+
+        <!-- Total Price Box -->
+        <div class="flex justify-end">
+          <div class="bg-blue-50 border border-blue-200 rounded-xl px-6 py-3">
+            <p class="text-lg font-semibold text-blue-700">
+              Total Amount: ₹<%= order.total_price %>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    <% end %>
+
+  <% else %>
+
+    <div class="bg-white p-6 rounded-xl shadow text-center border border-gray-200">
+      <p class="text-gray-600 text-lg">
+        You have no orders yet.
+      </p>
+    </div>
+
+  <% end %>
+
+</div>

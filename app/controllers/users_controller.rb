@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :set_logged_in_user, only: %i[ orders line_items ]
 
   # GET /users or /users.json
   def index
@@ -47,30 +48,41 @@ class UsersController < ApplicationController
     end
   end
 
-# DELETE /users/1 or /users/1.json
-def destroy
-  @user.destroy!
-  respond_to do |format|
-    format.html do
-      redirect_to users_url, notice: "User #{@user.name} deleted"
+  # DELETE /users/1 or /users/1.json
+  def destroy
+    @user.destroy
+    respond_to do |format|
+      format.html do
+        redirect_to users_url, notice: "User #{@user.name} deleted"
+      end
+      format.json { head :no_content }
     end
-    format.json { head :no_content }
   end
-end
+
+  def line_items
+    @line_items = @user.line_items.order(created_at: :desc).page(params[:page]).per(5)
+  end
 
 rescue_from "User::Error" do |exception|
   redirect_to users_url, notice: exception.message
 end
 
 
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params.expect(:id))
+      @user = User.find(params[:id])
     end
+
 
     # Only allow a list of trusted parameters through.
     def user_params
       params.expect(user: [ :name, :email, :password, :password_confirmation ])
+    end
+
+    def set_logged_in_user
+      @user = User.find(session[:user_id])
     end
 end

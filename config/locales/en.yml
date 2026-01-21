@@ -85,4 +85,8 @@ en:
       po_number: "PO #"
 
   thanks: "Thank you for your order"
+  errors:
+    only_one_level_nesting: "Sub-category cannot have child categories"
+    cannot_delete_category: "cannot_delete_category"
+
         
