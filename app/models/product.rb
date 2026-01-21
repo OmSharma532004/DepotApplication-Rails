@@ -1,7 +1,6 @@
 class Product < ApplicationRecord
 
   IMAGE_EXTENSION_REGEX = /\A.*\.(gif|jpg|png)\z/i
-<<<<<<< HEAD
 
   # Scope for all enabled products
   scope :all_enabled_products, -> { where(enabled: true) }
@@ -17,9 +16,8 @@ class Product < ApplicationRecord
   PERMALINK_REGEX = /\A[a-zA-Z0-9]+(-[a-zA-Z0-9]+){2,}\z/
 
 
-=======
-  belongs_to :category
->>>>>>> b9afbdd (Exercise)
+  belongs_to :category, counter_cache: true
+
   # Ensures presence for essential attributes
   validates :title, :description, :image_url, presence: true
 
@@ -58,12 +56,32 @@ class Product < ApplicationRecord
   has_many :cart, through: :line_items
   before_destroy :ensure_not_referenced_by_any_line_item # cascade on delete
 
+after_create_commit  :increment_category_counters
+after_destroy_commit :decrement_category_counters
+after_update_commit  :handle_category_change
 
-  after_create_commit  :increment_category_counters
-  after_destroy_commit :decrement_category_counters
-  after_update_commit  :handle_category_change
+private
 
-  private
+def increment_category_counters
+  category.parent&.increment!(:products_count)
+end
+
+def decrement_category_counters
+  category.parent&.decrement!(:products_count)
+end
+
+def handle_category_change
+  return unless saved_change_to_category_id?
+
+  old_id, new_id = saved_change_to_category_id
+
+  old_category = Category.find(old_id)
+  new_category = Category.find(new_id)
+
+  old_category.parent&.decrement!(:products_count)
+  new_category.parent&.increment!(:products_count)
+end
+
   def ensure_not_referenced_by_any_line_item
     unless line_items.empty?
       errors.add(:base, "Line Items present")
@@ -79,28 +97,5 @@ class Product < ApplicationRecord
   def set_discount_price
     self.discount_price = price
 
-  def increment_category_counters
-    update_counters(category, 1)
-  end
 
-  def decrement_category_counters
-    update_counters(category, -1)
-  end
-
-  def handle_category_change
-    return unless saved_change_to_category_id?
-
-    old_id, new_id = saved_change_to_category_id
-    update_counters(Category.find(old_id), -1)
-    update_counters(Category.find(new_id), 1)
-  end
-
-  def update_counters(category, by)
-    category.increment!(:products_count, by)
-
-    if category.parent.present?
-      category.parent.increment!(:products_count, by)
-    end
-
-  end
 end

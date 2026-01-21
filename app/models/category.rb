@@ -17,23 +17,23 @@ class Category < ApplicationRecord
             dependent: :restrict_with_error
 
   validates :name, presence: true
-  validates :name, uniqueness: { scope: :parent_id }, if: -> { name.present? }
+  validates :name, uniqueness: { scope: :parent_id }, allow_blank: true
 
   validate :only_one_level_nesting
-  before_destroy :ensure_no_products_in_tree
+  before_destroy :ensure_no_products_are_associated
 
   private
 
   def only_one_level_nesting
     if parent&.parent.present?
-      errors.add(:base, "Sub-category cannot have child categories")
+      errors.add(:base, I18n.t("errors.only_one_level_nesting"))
       throw(:abort)
     end
   end
 
-  def ensure_no_products_in_tree
+  def ensure_no_products_are_associated
     if products.exists? || sub_category_products.exists?
-      errors.add(:base, "Cannot delete category with associated products")
+      errors.add(:base, I18n.t("errors.cannot_delete_category"))
       throw(:abort)
     end
   end

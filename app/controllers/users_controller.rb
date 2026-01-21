@@ -59,9 +59,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def orders
-  end
-
   def line_items
     @line_items = @user.line_items.order(created_at: :desc).page(params[:page]).per(5)
   end
