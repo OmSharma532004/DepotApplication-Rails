@@ -35,7 +35,7 @@
               </td>
 
               <td class="px-6 py-4 text-gray-700">
-                ₹<%= item.product.price %>
+                <%= LineItemPresenter.new(item).price %>
               </td>
 
               <td class="px-6 py-4 font-semibold text-gray-900">

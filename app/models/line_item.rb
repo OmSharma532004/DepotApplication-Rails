@@ -3,6 +3,8 @@ class LineItem < ApplicationRecord
   belongs_to :product # reference
   belongs_to :cart, optional: true, counter_cache: true
 
+  scope :recent_first, -> { order(created_at: :desc) }
+
   def total_price
     product.price * quantity
   end
