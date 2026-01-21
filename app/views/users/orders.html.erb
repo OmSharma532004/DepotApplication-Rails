@@ -13,7 +13,7 @@
   <% if orders.any? %>
 
     <% orders.each do |order| %>
-      <%= render partial: 'users/order', locals: { order: order} %>
+      <%= render partial: 'order', locals: { order: order} %>
     <% end %>
 
   <% else %>
