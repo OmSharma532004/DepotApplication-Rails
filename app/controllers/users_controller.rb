@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
   before_action :set_logged_in_user, only: %i[ orders line_items ]
+  PER_PAGE = 5
 
   # GET /users or /users.json
   def index
@@ -60,7 +61,7 @@ class UsersController < ApplicationController
   end
 
   def line_items
-    @line_items = @user.line_items.order(created_at: :desc).page(params[:page]).per(5)
+    @line_items = @user.line_items.recent_first.page(params[:page]).per(PER_PAGE)
   end
 
 rescue_from "User::Error" do |exception|
