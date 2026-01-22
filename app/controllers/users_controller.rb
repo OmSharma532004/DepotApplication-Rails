@@ -3,6 +3,10 @@ class UsersController < ApplicationController
   before_action :set_logged_in_user, only: %i[ orders line_items ]
   PER_PAGE = 5
 
+  layout "myorders", only: %i[ orders line_items ]
+
+
+
   # GET /users or /users.json
   def index
     @users = User.order(:name)
@@ -24,9 +28,8 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
-
     respond_to do |format|
-      if @user.save
+      if @user.build_address(address_params) && @user.save
         format.html { redirect_to users_url, notice: "User was successfully created." }
         format.json { render :show, status: :created, location: @user }
       else
@@ -81,6 +84,10 @@ end
     # Only allow a list of trusted parameters through.
     def user_params
       params.expect(user: [ :name, :email, :password, :password_confirmation ])
+    end
+
+    def address_params
+      params.expect(address: [ :state, :city, :country, :pincode ])
     end
 
     def set_logged_in_user

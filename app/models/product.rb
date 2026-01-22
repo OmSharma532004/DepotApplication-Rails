@@ -18,8 +18,16 @@ class Product < ApplicationRecord
 
   belongs_to :category, counter_cache: true
 
+
+  MAX_IMAGES = 3
+
+  belongs_to :category, dependent: :destroy
+  has_many_attached :images
+
   # Ensures presence for essential attributes
-  validates :title, :description, :image_url, presence: true
+  validates :title, :description, presence: true
+
+  validate :images_count_within_limit
 
   # Ensures title is unique
   validates :title, uniqueness: true
@@ -94,8 +102,16 @@ end
     self.title = DEFAULT_TITLE
   end
 
+  def images_count_within_limit
+    return unless images.attached?
+
+    if images.count > MAX_IMAGES
+      errors.add(:images, "cannot have more than #{MAX_IMAGES} images")
+    end
+  end
+
+
   def set_discount_price
     self.discount_price = price
   end
-
 end

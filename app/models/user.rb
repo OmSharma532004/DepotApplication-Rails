@@ -5,8 +5,10 @@ class User < ApplicationRecord
   EMAIL_REGEX = /\A[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\z/
 
   after_commit :send_welcome_email, on: :create
-  before_update  :ensure_admin_remains
-  before_destroy :ensure_admin_remains
+  before_update  :ensure_an_admin_remains
+  has_one :address, as: :addressable
+  before_destroy :ensure_an_admin_remains
+
   has_secure_password
   has_many :orders, dependent: :destroy
   has_many :line_items, through: :orders
@@ -15,7 +17,7 @@ class User < ApplicationRecord
 
   private
 
-  def ensure_admin_remains
+  def ensure_an_admin_remains
     if email_was == ADMIN_EMAIL
     errors.add(:base, "Admin cannot be changed")
     throw(:abort)
