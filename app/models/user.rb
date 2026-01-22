@@ -3,6 +3,7 @@ class Error < StandardError; end
 class User < ApplicationRecord
   ADMIN_EMAIL = "admin@depot.com"
   EMAIL_REGEX = /\A[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}\z/
+  INACTIVITY_TIMEOUT = 5
 
   after_commit :send_welcome_email, on: :create
   before_update  :ensure_an_admin_remains
@@ -16,7 +17,11 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, format: { with: EMAIL_REGEX }
 
   def is_admin?
-      role == 'admin'
+    role == 'admin'
+  end
+
+  def inactive?
+    last_activity && Time.current - last_activity >= INACTIVITY_TIMEOUT.minutes
   end
 
   private

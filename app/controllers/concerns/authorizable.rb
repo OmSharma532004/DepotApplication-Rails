@@ -1,5 +1,4 @@
-module CurrentUser
-    INACTIVITY_TIMEOUT = 5
+module Authorizable
 
   def authorize
     unless current_user
@@ -14,12 +13,9 @@ module CurrentUser
   
   def inactive_logout
     return unless current_user
-    puts "Current:- #{current_user}" 
 
-    if current_user.last_activity &&
-      Time.current - current_user.last_activity >= INACTIVITY_TIMEOUT.minutes
+    if current_user.inactive?
       reset_session
-      @user = nil
       redirect_to login_path, notice: "You were logged out due to inactivity"
     else
       current_user.update(last_activity: Time.current)
