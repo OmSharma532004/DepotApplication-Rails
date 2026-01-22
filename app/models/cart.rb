@@ -1,19 +1,20 @@
 class Cart < ApplicationRecord
   has_many :line_items, dependent: :destroy
   has_many :products, through: :line_items
-  has_many :enabled_products, -> { where enabled: true }, through: :line_items, class_name: "Product"
+  has_many :enabled_products, -> { is_enabled }, through: :line_items, source: :product, class_name: "Product"
 
   def add_product(product)
     current_item = line_items.find_by(product_id: product.id)
     if current_item
       current_item.quantity += 1
     else
-      current_item = line_items.build(product_id: product.id)
+      current_item = line_items.build(product_id: product.id, price:product.price)
     end
     current_item
   end
 
   def total_price
-    line_items.sum { |item| item.total_price }
+    line_items.sum('price*quantity')
   end
+
 end

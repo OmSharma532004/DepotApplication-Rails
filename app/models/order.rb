@@ -25,6 +25,7 @@ class Order < ApplicationRecord
   end
 
   def add_line_items_from_cart(cart)
+    self.total_price = cart.total_price
     cart.line_items.each do |item|
       item.cart_id = nil
       line_items << item
