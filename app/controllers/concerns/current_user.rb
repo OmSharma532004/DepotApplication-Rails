@@ -1,5 +1,5 @@
 module CurrentUser
-    INACTIVITY_TIMEOUT = 1
+    INACTIVITY_TIMEOUT = 5
 
   def authorize
     unless current_user
