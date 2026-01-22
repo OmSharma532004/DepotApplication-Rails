@@ -19,8 +19,8 @@ Rails.application.routes.draw do
     get "reports", to: "reports#index"
     post "reports", to: "reports#index"
     get "categories", to: "categories#index"
-    get "categories/:id/products", to: "categories#products", as: :category_products, constraints: { id: /\d+/ }
-    get "categories/:id/products", to: redirect("/")
+    get "categories/:id/books", to: "categories#products", as: :category_products, constraints: { id: /\d+/ }
+    get "categories/:id/books", to: redirect("/")
   end
 
   resources :categories
