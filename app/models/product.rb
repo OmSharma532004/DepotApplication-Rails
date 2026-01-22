@@ -60,7 +60,6 @@ class Product < ApplicationRecord
 
   validates :description, length: { in: 5..10 }, allow_blank: true
 
-=
   has_many :line_items, dependent: :restrict_with_error # add error trying to destroy a product that is assigned to a line_item
   has_many :cart, through: :line_items
   before_destroy :ensure_not_referenced_by_any_line_item # cascade on delete

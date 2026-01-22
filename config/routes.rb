@@ -20,8 +20,7 @@ Rails.application.routes.draw do
     get "line_items", on: :collection
   end
 
-
-
+  
   resources :products
 
   get "up" => "rails/health#show", as: :rails_health_check

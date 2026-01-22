@@ -69,7 +69,7 @@ class ProductsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def product_params # this is called when we submit a form and it sends a Product object
       puts params
-      params.expect(product: [ :title, :description, :image_url, :price, :category_id, images: [] ])
+      params.expect(product: [ :title, :description, :image_url, :discount_price, :permalink, :enabled, :price, :category_id, images: [] ])
     end
 
     def set_categories
