@@ -21,7 +21,7 @@ class Product < ApplicationRecord
 
   MAX_IMAGES = 3
 
-  belongs_to :category
+  belongs_to :category, dependent: :destroy
   has_many_attached :images
 
   # Ensures presence for essential attributes

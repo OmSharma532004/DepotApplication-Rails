@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_12_090327) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_21_062325) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -43,12 +43,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_12_090327) do
   end
 
   create_table "addresses", force: :cascade do |t|
+    t.bigint "addressable_id"
+    t.string "addressable_type"
     t.string "city", null: false
     t.string "country", null: false
     t.datetime "created_at", null: false
     t.bigint "pincode", null: false
     t.string "state", null: false
     t.datetime "updated_at", null: false
+    t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable"
   end
 
   create_table "carts", force: :cascade do |t|
@@ -70,6 +73,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_12_090327) do
     t.integer "cart_id"
     t.datetime "created_at", null: false
     t.bigint "order_id"
+    t.bigint "price"
     t.bigint "product_id", null: false
     t.integer "quantity", default: 1
     t.datetime "updated_at", null: false
@@ -84,6 +88,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_12_090327) do
     t.string "email"
     t.string "name"
     t.integer "pay_type"
+    t.bigint "total_price"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_orders_on_user_id"
@@ -104,13 +109,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_12_090327) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.bigint "address_id"
     t.datetime "created_at", null: false
     t.string "email"
+    t.string "language", default: "english"
     t.string "name"
     t.string "password_digest"
+    t.string "role", default: "user"
     t.datetime "updated_at", null: false
-    t.index ["address_id"], name: "index_users_on_address_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
@@ -122,5 +127,4 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_12_090327) do
   add_foreign_key "line_items", "products"
   add_foreign_key "orders", "users"
   add_foreign_key "products", "categories"
-  add_foreign_key "users", "addresses"
 end
