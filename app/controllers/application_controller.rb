@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include CurrentUser
+  include CurrentSession
   helper_method :logged_in?, :current_user
   before_action :authorize,:set_i18n_locale_from_params, :count_session_hits, :inactive_logout
 
