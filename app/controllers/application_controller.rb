@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include CurrentUser
   include CurrentSession
   helper_method :logged_in?, :current_user
-  before_action :authorize,:set_i18n_locale_from_params, :count_session_hits, :inactive_logout
+  before_action :authorize,:set_i18n_locale_from_params, :inactive_logout, :count_session_hits
 
   around_action :measure_execution_time
   # Only allow modern browsers supporting webp images, web push, badges,
