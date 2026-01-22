@@ -15,6 +15,10 @@ class User < ApplicationRecord
 
   validates :email, uniqueness: true, format: { with: EMAIL_REGEX }
 
+  def is_admin?
+      role == 'admin'
+  end
+
   private
 
   def ensure_an_admin_remains
@@ -23,6 +27,7 @@ class User < ApplicationRecord
     throw(:abort)
     end
   end
+
 
   def send_welcome_email
     # Will be added later
