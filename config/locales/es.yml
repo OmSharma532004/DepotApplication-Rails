@@ -78,3 +78,48 @@ es:
         pay_type: "Forma de pago"
 
   thanks: "Gracias por su pedido"
+  mailer:
+    order:
+      subject: "Confirmación de pedido #%{order_id}"
+      heading: "Detalles del pedido"
+      greeting: "Hola %{name},"
+      thank_you: "¡Gracias por tu pedido! Nos complace informarte que tu pedido se ha realizado correctamente."
+      order_date: "Fecha del pedido"
+      product: "Producto"
+      quantity: "Cantidad"
+      price: "Precio"
+      total: "Total"
+      shipping_notice: "Te notificaremos una vez que tu pedido sea enviado."
+      thanks: "Gracias,"
+      team: "El equipo de Example"
+      
+  activerecord:
+    errors:
+      messages:
+        blank: "Por favor complete %{attribute}"
+        present: "%{attribute} debe estar en blanco"
+        taken: "%{attribute} ya está en uso"
+        invalid: "%{attribute} no es válido"
+        confirmation: "%{attribute} no coincide con la confirmación"
+        accepted: "%{attribute} debe ser aceptado"
+        empty: "%{attribute} no puede estar vacío"
+        too_long:
+          one: "%{attribute} es demasiado largo (máximo 1 carácter)"
+          other: "%{attribute} es demasiado largo (máximo %{count} caracteres)"
+        too_short:
+          one: "%{attribute} es demasiado corto (mínimo 1 carácter)"
+          other: "%{attribute} es demasiado corto (mínimo %{count} caracteres)"
+        wrong_length:
+          one: "%{attribute} tiene una longitud incorrecta (debe ser 1 carácter)"
+          other: "%{attribute} tiene una longitud incorrecta (debe ser %{count} caracteres)"
+        not_a_number: "%{attribute} no es un número"
+        not_an_integer: "%{attribute} debe ser un número entero"
+        greater_than: "%{attribute} debe ser mayor que %{count}"
+        greater_than_or_equal_to: "%{attribute} debe ser mayor o igual a %{count}"
+        equal_to: "%{attribute} debe ser igual a %{count}"
+        less_than: "%{attribute} debe ser menor que %{count}"
+        less_than_or_equal_to: "%{attribute} debe ser menor o igual a %{count}"
+        other_than: "%{attribute} debe ser distinto de %{count}"
+        odd: "%{attribute} debe ser impar"
+        even: "%{attribute} debe ser par"
+

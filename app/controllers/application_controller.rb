@@ -47,6 +47,16 @@ class ApplicationController < ActionController::Base
     session[:hit_count] += 1
   end
 
+  def set_user_preferred_language()
+    locale = AppConstants::LOCALE_MAP[User.find_by(id: session[:user_id])&.language] || I18n.default_locale
+    if I18n.available_locales.include?(locale)
+      I18n.locale = locale
+    else
+      flash.now[:notice] = "#{locale} translation not available"
+        logger.error flash.now[:notice]
+    end
+  end
+
   def set_i18n_locale_from_params
     if params[:locale]
       if I18n.available_locales.map(&:to_s).include?(params[:locale])

@@ -35,6 +35,7 @@ def create
       Cart.destroy(session[:cart_id])
       session[:cart_id] = nil
       ChargeOrderJob.perform_later(@order, pay_type_params.to_h)
+      UserMailer.with(user:@order.user, order: @order).send_order_confirmation.deliver_later
       format.html { redirect_to store_index_url(locale: I18n.locale),
       notice: I18n.t(".thanks") }
       format.json do
