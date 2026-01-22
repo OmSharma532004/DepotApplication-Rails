@@ -1,8 +1,8 @@
 class ApplicationController < ActionController::Base
-  before_action :set_i18n_locale_from_params
-  before_action :authorize
   helper_method :logged_in?
+  before_action :authorize,:set_i18n_locale_from_params, :count_session_hits, :inactive_logout
 
+  around_action :measure_execution_time
   # Only allow modern browsers supporting webp images, web push, badges,
   # import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
@@ -12,14 +12,39 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def measure_execution_time
+      start_time = Time.now
+      yield
+      end_time = Time.now
+
+      session[:duration] = end_time - start_time
+  end
+
   def authorize
-    unless User.find_by(id: session[:user_id])
-      redirect_to login_url, notice: "Please log in"
+    unless User.find_by(id: session[:user_id])&.role == 'admin'
+      redirect_to login_url, notice: "You don't have privilege to access this section"
     end
   end
 
   def logged_in?
     return session[:user_id]
+  end
+  
+  def inactive_logout
+    return unless session[:user_id]
+
+    last_activity = session[:last_activity_at]
+    if last_activity && (Time.current - last_activity.to_time >= 5.minutes)
+    session.delete(:user)
+    redirect_to login_path, notice: "You were logged out due to inactivity"
+    else
+      session[:last_activity_at] = Time.current
+    end
+  end
+
+  def count_session_hits
+    session[:hit_count] ||= 0
+    session[:hit_count] += 1
   end
 
   def set_i18n_locale_from_params
