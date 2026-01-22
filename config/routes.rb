@@ -1,10 +1,8 @@
 Rails.application.routes.draw do
-  # ✅ FIREFOX → ONLY HOME PAGE
   constraints BrowserConstraint.new(allow_firefox: true) do
     root "store#index"
   end
 
-  # ✅ NON-FIREFOX → FULL APP
   constraints BrowserConstraint.new(allow_firefox: false) do
     root "store#index", as: "store_index"
 
