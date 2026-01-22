@@ -2,6 +2,9 @@ class Order < ApplicationRecord
   has_many :line_items, dependent: :destroy
   belongs_to :user
 
+  # Scope to list all orders by date
+  scope :by_date, ->(from = Date.today, to = Date.today) { where(created_at: from.beginning_of_day..to.end_of_day) }
+
   def self.pay_types
     {
       "Check" => 0,

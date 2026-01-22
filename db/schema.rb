@@ -42,6 +42,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_21_062325) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+ActiveRecord::Schema[8.1].define(version: 2026_01_09_105425) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "addresses", force: :cascade do |t|
     t.string "city", null: false
     t.string "country", null: false
