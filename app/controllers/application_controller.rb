@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-  helper_method :logged_in?
+  include CurrentUser
+  helper_method :logged_in?, :current_user
   before_action :authorize,:set_i18n_locale_from_params, :count_session_hits, :inactive_logout
 
   around_action :measure_execution_time
@@ -9,52 +10,4 @@ class ApplicationController < ActionController::Base
 
   # Changes to the importmap will invalidate the etag for HTML responses
   stale_when_importmap_changes
-
-  protected
-
-  def measure_execution_time
-      start_time = Time.now
-      yield
-      end_time = Time.now
-
-      session[:duration] = end_time - start_time
-  end
-
-  def authorize
-    unless User.find_by(id: session[:user_id])&.role == 'admin'
-      redirect_to login_url, notice: "You don't have privilege to access this section"
-    end
-  end
-
-  def logged_in?
-    return session[:user_id]
-  end
-  
-  def inactive_logout
-    return unless session[:user_id]
-
-    last_activity = session[:last_activity_at]
-    if last_activity && (Time.current - last_activity.to_time >= 5.minutes)
-    session.delete(:user)
-    redirect_to login_path, notice: "You were logged out due to inactivity"
-    else
-      session[:last_activity_at] = Time.current
-    end
-  end
-
-  def count_session_hits
-    session[:hit_count] ||= 0
-    session[:hit_count] += 1
-  end
-
-  def set_i18n_locale_from_params
-    if params[:locale]
-      if I18n.available_locales.map(&:to_s).include?(params[:locale])
-        I18n.locale = params[:locale]
-      else
-        flash.now[:notice] = "#{params[:locale]} translation not available"
-        logger.error flash.now[:notice]
-      end
-    end
-  end
 end

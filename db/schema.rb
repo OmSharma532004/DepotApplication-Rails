@@ -10,41 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-ActiveRecord::Schema[8.1].define(version: 2026_01_21_062325) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_catalog.plpgsql"
-
-  create_table "active_storage_attachments", force: :cascade do |t|
-    t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
-    t.string "name", null: false
-    t.bigint "record_id", null: false
-    t.string "record_type", null: false
-    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
-  end
-
-  create_table "active_storage_blobs", force: :cascade do |t|
-    t.bigint "byte_size", null: false
-    t.string "checksum"
-    t.string "content_type"
-    t.datetime "created_at", null: false
-    t.string "filename", null: false
-    t.string "key", null: false
-    t.text "metadata"
-    t.string "service_name", null: false
-    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
-  end
-
-  create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
-    t.string "variation_digest", null: false
-    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
-  end
-
-ActiveRecord::Schema[8.1].define(version: 2026_01_09_105425) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_22_154125) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -79,54 +45,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_09_105425) do
   create_table "addresses", force: :cascade do |t|
     t.bigint "addressable_id"
     t.string "addressable_type"
-=======
-ActiveRecord::Schema[8.1].define(version: 2026_01_09_105425) do
-=======
-ActiveRecord::Schema[8.1].define(version: 2026_01_12_105709) do
->>>>>>> 343f093 (Controller Completed)
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_catalog.plpgsql"
-
-  create_table "active_storage_attachments", force: :cascade do |t|
-    t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
-    t.string "name", null: false
-    t.bigint "record_id", null: false
-    t.string "record_type", null: false
-    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
-  end
-
-  create_table "active_storage_blobs", force: :cascade do |t|
-    t.bigint "byte_size", null: false
-    t.string "checksum"
-    t.string "content_type"
-    t.datetime "created_at", null: false
-    t.string "filename", null: false
-    t.string "key", null: false
-    t.text "metadata"
-    t.string "service_name", null: false
-    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
-  end
-
-  create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
-    t.string "variation_digest", null: false
-    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
-  end
-
-  create_table "addresses", force: :cascade do |t|
->>>>>>> 8be9e96 (Applied all)
     t.string "city", null: false
     t.string "country", null: false
     t.datetime "created_at", null: false
     t.bigint "pincode", null: false
     t.string "state", null: false
     t.datetime "updated_at", null: false
-<<<<<<< HEAD
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable"
-=======
->>>>>>> 8be9e96 (Applied all)
   end
 
   create_table "carts", force: :cascade do |t|
@@ -187,7 +112,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_12_105709) do
     t.bigint "address_id"
     t.datetime "created_at", null: false
     t.string "email"
+    t.bigint "hit_count", default: 0
     t.string "language", default: "english"
+    t.datetime "last_activity"
     t.string "name"
     t.string "password_digest"
     t.string "role", default: "user"
@@ -196,24 +123,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_12_105709) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-=======
->>>>>>> 8be9e96 (Applied all)
-=======
-  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
->>>>>>> 343f093 (Controller Completed)
   add_foreign_key "categories", "categories", column: "parent_id"
   add_foreign_key "line_items", "carts"
   add_foreign_key "line_items", "orders"
   add_foreign_key "line_items", "products"
   add_foreign_key "orders", "users"
   add_foreign_key "products", "categories"
-<<<<<<< HEAD
-=======
   add_foreign_key "users", "addresses"
->>>>>>> 8be9e96 (Applied all)
 end

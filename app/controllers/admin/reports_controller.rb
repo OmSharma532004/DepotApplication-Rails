@@ -1,4 +1,4 @@
-class Admin::ReportsController < ApplicationController
+class Admin::ReportsController < Admin::BaseController
   def index
     @orders = Order.by_date(from_date, to_date)
   end
