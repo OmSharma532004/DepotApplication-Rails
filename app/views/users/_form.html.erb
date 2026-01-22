@@ -31,31 +31,7 @@
     <%= form.password_field :password_confirmation, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": user.errors[:password_confirmation].none?, "border-red-400 focus:outline-red-600": user.errors[:password_confirmation].any?}] %>
   </div>
 
-<<<<<<< HEAD
   <%= render 'address_form', user: user %>
-=======
-  <%= fields_for :address, user.address do |address_form|%>
-  <div class="my-5">
-    <%= address_form.label :state%>
-    <%= address_form.text_field :state %>
-  </div>
-
-  <div class="my-5">
-    <%= address_form.label :city%>
-    <%= address_form.text_field :city %>
-  </div>
-
-  <div class="my-5">
-    <%= address_form.label :country%>
-    <%= address_form.text_field :country %>
-  </div>
-  
-  <div class="my-5">
-    <%= address_form.label :pincode %>
-    <%= address_form.text_field :pincode %>
-  </div>      
-  <% end %>
->>>>>>> 343f093 (Controller Completed)
 
   <div class="inline">
     <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>

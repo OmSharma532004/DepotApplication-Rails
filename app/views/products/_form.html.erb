@@ -1,11 +1,4 @@
-<<<<<<< HEAD
 <%= form_with(model: product, multipart: true, class: "contents") do |form| %>
-=======
-<%= form_with(model: product, multipart: true ,class: "contents") do |form| %>
-  <% if product.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
-      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
->>>>>>> 343f093 (Controller Completed)
 
   <% if product.errors.any? %>
     <div id="error_explanation"
@@ -33,17 +26,10 @@
   <!-- Description -->
   <div class="my-5">
     <%= form.label :description %>
-<<<<<<< HEAD
     <%= form.textarea :description,
           rows: 4,
           class: field_classes(product, :description) %>
   </div>
-=======
-    <%= form.textarea :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": product.errors[:description].none?, "border-red-400 focus:outline-red-600": product.errors[:description].any?}] %>
-  </div>
-
-
->>>>>>> 343f093 (Controller Completed)
 
   <!-- Price -->
   <div class="my-5">
@@ -62,7 +48,6 @@
   <!-- Discount Price -->
   <div class="my-5">
     <%= form.label :discount_price %>
-<<<<<<< HEAD
     <%= form.text_field :discount_price,
           class: field_classes(product, :discount_price) %>
   </div>
@@ -91,25 +76,6 @@
           :name,
           { prompt: "Select One" },
           class: field_classes(product, :category_id) %>
-=======
-    <%= form.text_field :discount_price, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": product.errors[:discount_price].none?, "border-red-400 focus:outline-red-600": product.errors[:discount_price].any?}] %>
-  </div>
-
-  <div>
-    <%= form.label :images %> (LIMIT 3)
-    <%= form.file_field :images, multiple: true, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": product.errors[:images].none?, "border-red-400 focus:outline-red-600": product.errors[:images].any?}] %>
-  </div>
-
-
-  <div class="my-5">
-    <%= form.label :permalink %>
-    <%= form.text_field :permalink, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": product.errors[:permalink].none?, "border-red-400 focus:outline-red-600": product.errors[:permalink].any?}] %>
-  </div>
-
-  <div class="my-5">
-    <%= form.label :category_id %>
-    <%= form.collection_select :category_id , @categories, :id, :name, prompt: "Select One" ,class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": product.errors[:category_id].none?, "border-red-400 focus:outline-red-600": product.errors[:category_id].any?}] %>
->>>>>>> 343f093 (Controller Completed)
   </div>
 
   <!-- Submit -->

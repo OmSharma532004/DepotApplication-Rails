@@ -72,23 +72,9 @@ end
     end
   end
 
-<<<<<<< HEAD
 
   def set_default_title
     self.title = DEFAULT_TITLE
-=======
-  def images_count_within_limit
-    return unless images.attached?
-
-    if images.count > MAX_IMAGES
-      errors.add(:images, "cannot have more than #{MAX_IMAGES} images")
-    end
-  end
-
-
-  def increment_category_counters
-    update_counters(category, 1)
->>>>>>> 343f093 (Controller Completed)
   end
 
   def images_count_within_limit
