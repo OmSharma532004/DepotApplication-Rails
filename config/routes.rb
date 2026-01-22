@@ -7,11 +7,19 @@ Rails.application.routes.draw do
     delete "logout" => :destroy
   end
 
+
   # Session routes (optional)
   get "admin/index"
   get "sessions/new"
   get "sessions/create"
   get "sessions/destroy"
+
+
+  namespace :admin do
+    get "reports", to: "reports#index"
+    post "reports", to: "reports#index"
+    get "categories", to: "categories#index"
+  end
 
   resources :categories
 

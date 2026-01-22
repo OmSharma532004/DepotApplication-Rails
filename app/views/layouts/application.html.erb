@@ -91,4 +91,15 @@
     </nav>
   </section>
 </body>
+
+<footer class="border-t border-gray-200 py-4 text-center text-sm text-gray-500">
+  Visits:
+  <span class="font-semibold text-gray-700">
+    <%= current_user&.hit_count %>
+  </span>
+  <div>
+  Your Ip Address is <%= request.ip %>
+  </div>
+</footer>
+
 </html>

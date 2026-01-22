@@ -7,6 +7,9 @@ class UsersController < ApplicationController
 
 
 
+  layout "myorders", only: [ :orders, :line_items ]
+
+
   # GET /users or /users.json
   def index
     @users = User.order(:name)

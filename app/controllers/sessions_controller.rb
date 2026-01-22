@@ -7,6 +7,7 @@ class SessionsController < ApplicationController
     user = User.find_by(name: params[:name])
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
+      user.update(last_activity: Time.current)
       redirect_to admin_url
     else
       redirect_to login_url, alert: "Invalid user/password combination"
